@@ -34,6 +34,12 @@ docs = "mkdocs serve"
 [tool.poetry.group.doc.dependencies]
 mkdocs = "^1.6.0"
 
+[tool.pytest.init_options]
+pythonpath = "."
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
