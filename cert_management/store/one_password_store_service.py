@@ -23,17 +23,33 @@ class OnePasswordStoreService(StoreServiceContract):
         instance = cls(client)
         return instance
 
+    async def store_many(self, items):
+        vault_id = 'ezkhx3p2zkaekyr47u3cjdlkoe'
+        data = list(map(lambda item: ItemField(id=item['id'], title= item['title'], field_type=item['field_type'],
+                    section_id='batatinha',
+                    value=item['value']), items))
+        to_create = Item(
+            id="",
+            title="test_app",
+            category="SshKey",
+            vault_id="ezkhx3p2zkaekyr47u3cjdlkoe",
+            fields=data,
+            sections=[ItemSection(id="batatinha", title="")],
+        )
+        await self._client_one_password.items.create(to_create)
+
+
     async def store(self, item, field_name, config_field):
         to_create = Item(
             id="",
-            title="test",
-            category="SecureNote",
+            title="test_app",
+            category="SshKey",
             vault_id="ezkhx3p2zkaekyr47u3cjdlkoe",
             fields=[
                 ItemField(
                     id="privatekey",
                     title=field_name,
-                    field_type="Text",
+                    field_type=config_field['field_type'],
                     section_id='batatinha',
                     value=item,
                 ),
