@@ -5,6 +5,7 @@ from onepassword.types import Item, ItemField, ItemSection
 from cert_management.contract.store_service_contract import StoreServiceContract
 from onepassword.client import Client
 from cert_management.configuration.variables import config
+from typing import overload
 
 
 class OnePasswordStoreService(StoreServiceContract):
@@ -39,19 +40,20 @@ class OnePasswordStoreService(StoreServiceContract):
         await self._client_one_password.items.create(to_create)
 
 
-    async def store(self, item, field_name, config_field):
+    async def store(self, value_field, field_name, config_field):
+        # SshKey, SecureNote
         to_create = Item(
             id="",
-            title="test_app",
-            category="SshKey",
+            title=config_field['title'],
+            category=config_field['category'],
             vault_id="ezkhx3p2zkaekyr47u3cjdlkoe",
             fields=[
                 ItemField(
-                    id="privatekey",
+                    id=field_name,
                     title=field_name,
                     field_type=config_field['field_type'],
                     section_id='batatinha',
-                    value=item,
+                    value=value_field,
                 ),
 
             ],

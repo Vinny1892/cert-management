@@ -17,13 +17,13 @@ class CreateCertificateAuthorityCommand:
         self._certificate_authority_command = CertificateAuthority()
         self._store_service = store_service
 
-    def execute(self, save=False) -> None:
+    async def execute(self, save=False) -> None:
         if self._certificate_authority:
             self._cert, self._encoding = self._certificate_authority_command.create(self._private_key)
         if save:
-            self.save(os.path.join(self._dirs["certs"],"ca.cert.crt"))
+            await self.save()
 
 
-    def save(self,path: str):
-        with open(path, "wb") as f:
-            f.write(self._cert.public_bytes(self._encoding))
+    async def save(self):
+       file = self._certificate_authority_command.convert_to_file()
+       await self._store_service.store(file,'certificate authority',{'field_type': 'Text', 'title': 'certificate authority', 'category':'SecureNote'})

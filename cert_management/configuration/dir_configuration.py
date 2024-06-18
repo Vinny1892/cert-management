@@ -1,6 +1,6 @@
 import os
 # TODO: pegar via variavel de ambiente ou arquivo de configuração ou parametro de cli
-base_dir = "/home/vinny/test_ca/test_ca2"
+base_dir = "/tmp/test_ca"
 
 class DirConfiguration:
     def __init__(self):

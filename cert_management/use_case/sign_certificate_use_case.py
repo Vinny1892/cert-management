@@ -1,4 +1,4 @@
-from cert_management.commands.CreatePrivateKey import CreatePrivateKey
+from cert_management.commands.create_private_key_command import CreatePrivateKey
 from cert_management.commands.validate_certificate_authority_exists_command import \
     ValidateCertificateAuthorityExistsCommand
 from cert_management.contract.store_service_contract import StoreServiceContract

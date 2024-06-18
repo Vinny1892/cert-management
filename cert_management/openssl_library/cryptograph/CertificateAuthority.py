@@ -13,6 +13,12 @@ class CertificateAuthority:
 
     def sign(self):
         pass
+
+    
+    def convert_to_file(self):
+        return self.cert.public_bytes(serialization.Encoding.PEM).decode('utf-8')
+
+
     def create(self, key):
         subject = issuer = x509.Name([
             x509.NameAttribute(NameOID.COUNTRY_NAME, u"BR"),
@@ -21,7 +27,7 @@ class CertificateAuthority:
             x509.NameAttribute(NameOID.ORGANIZATION_NAME, u"TI"),
             x509.NameAttribute(NameOID.COMMON_NAME, u"My CA")
         ])
-        cert = x509.CertificateBuilder().subject_name(
+        self.cert = x509.CertificateBuilder().subject_name(
             subject
         ).issuer_name(
             issuer
@@ -44,5 +50,4 @@ class CertificateAuthority:
             x509.SubjectKeyIdentifier.from_public_key(key.public_key()), critical=False
         ).sign(key, hashes.SHA256(), default_backend())
 
-
-        return cert, serialization.Encoding.PEM
+        return self.cert, serialization.Encoding.PEM
