@@ -1,7 +1,3 @@
-import asyncio
-from functools import wraps
-
-from rich import print
 from typer import Argument, Typer
 
 from cert_management.cli import typer_async
@@ -18,12 +14,12 @@ app = Typer()
 
 @app.command()
 @typer_async
-async def sign_certificate(
-    path: str = Argument("", help="Path to the certificate file"),
+async def create(
+    password: str = Argument(None, help="Password for private key"),
 ):
     try:
         one_password = await OnePasswordStoreService.build()
-        await CreatePrivateKey(store_service=one_password, passphrase="").execute(
+        await CreatePrivateKey(store_service=one_password, passphrase=password).execute(
             save=True
         )
     except Exception as exception:

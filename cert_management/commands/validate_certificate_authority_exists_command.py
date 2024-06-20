@@ -1,4 +1,6 @@
-from cert_management.contract.store_service_contract import StoreServiceContract
+from cert_management.contract.store_service_contract import (
+    StoreServiceContract,
+)
 
 
 class ValidateCertificateAuthorityExistsCommand:
@@ -8,6 +10,3 @@ class ValidateCertificateAuthorityExistsCommand:
 
     def execute(self) -> bool:
         return self.store_service.item_exists()
-
-
-

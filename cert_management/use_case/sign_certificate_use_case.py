@@ -1,7 +1,12 @@
-from cert_management.commands.create_private_key_command import CreatePrivateKey
-from cert_management.commands.validate_certificate_authority_exists_command import \
-    ValidateCertificateAuthorityExistsCommand
-from cert_management.contract.store_service_contract import StoreServiceContract
+from cert_management.commands.create_private_key_command import (
+    CreatePrivateKey,
+)
+from cert_management.commands.validate_certificate_authority_exists_command import (
+    ValidateCertificateAuthorityExistsCommand,
+)
+from cert_management.contract.store_service_contract import (
+    StoreServiceContract,
+)
 
 
 class SignCertificateUseCase:
@@ -13,4 +18,3 @@ class SignCertificateUseCase:
         ValidateCertificateAuthorityExistsCommand(store_service=self.store).execute()
         CreatePrivateKey(store_service=self.store).execute(save=True)
         ## sign_certificate
-
