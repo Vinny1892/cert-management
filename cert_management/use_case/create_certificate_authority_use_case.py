@@ -11,7 +11,7 @@ from cert_management.commands.create_private_key_command import (
 from cert_management.contract.store_service_contract import (
     StoreServiceContract,
 )
-from cert_management.openssl_library.cryptograph.PrivateKey import PrivateKey
+from cert_management.openssl_library.cryptography.private_key import PrivateKey
 
 
 @dataclass
@@ -20,8 +20,8 @@ class OptionsCreateCertificateAuthority:
     class to register options in which by CreateCertificateAuthorityUseCase
     """
 
-    path_private_key: str
-    password_private_key: str
+    path_private_key: str | None
+    password_private_key: str | None
 
 
 class CreateCertificateAuthorityUseCase:
@@ -49,19 +49,27 @@ class CreateCertificateAuthorityUseCase:
         self.options = options
 
     async def handle(self):
-        private_key_module = PrivateKey()
         if self.options.path_private_key is None:
-            password = self._generate_password()
-            pk = await CreatePrivateKey(
-                store_service=self.store, passphrase=password
-            ).execute(save=True, is_ca_private_key=True)
+            await self._create_certificate_authority_without_load_private_key()
         else:
-            # TODO: handle exception if certificate has encrypted and password is not provided
-            file = await self.store.get_item(self.options.path_private_key)
-            pk = private_key_module.load_pk(
-                file=file, password=self.options.password_private_key
-            )
-        await CreateCertificateAuthorityCommand(
+            await self._create_certificate_authority_with_load_private_key()
+
+    async def _create_certificate_authority_with_load_private_key(self):
+        private_key_module = PrivateKey()
+        file = await self.store.get_item(self.options.path_private_key)
+        pk = private_key_module.load_pk(
+            file=file, password=self.options.password_private_key
+        )
+        return await CreateCertificateAuthorityCommand(
+            store_service=self.store, private_key=pk
+        ).execute(save=True)
+
+    async def _create_certificate_authority_without_load_private_key(self) -> None:
+        password = self._generate_password()
+        pk = await CreatePrivateKey(
+            store_service=self.store, passphrase=password
+        ).execute(save=True, is_ca_private_key=True)
+        return await CreateCertificateAuthorityCommand(
             store_service=self.store, private_key=pk
         ).execute(save=True)
 
@@ -69,22 +77,17 @@ class CreateCertificateAuthorityUseCase:
         self,
         length=12,
         use_uppercase=True,
-        use_lowercase=True,
         use_numbers=True,
         use_symbols=True,
-    ):
-        characters = ""
+    ) -> str:
+        characters = string.ascii_lowercase
+
         if use_uppercase:
             characters += string.ascii_uppercase
-        if use_lowercase:
-            characters += string.ascii_lowercase
         if use_numbers:
             characters += string.digits
         if use_symbols:
             characters += string.punctuation
-
-        if not characters:
-            raise ValueError("At least one type of character must be selected")
 
         password = "".join(random.choice(characters) for _ in range(length))
         return password

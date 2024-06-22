@@ -3,7 +3,7 @@ import os
 from onepassword.client import Client
 from onepassword.types import Item, ItemField, ItemSection
 
-from cert_management.configuration.variables import config
+from cert_management.configuration.variables import Configuration
 from cert_management.contract.store_service_contract import (
     StoreServiceContract,
 )
@@ -19,7 +19,7 @@ class OnePasswordStoreService(StoreServiceContract):
 
     @classmethod
     async def build(cls) -> "OnePasswordStoreService":
-        token = config("ONE_PASSWORD_TOKEN")
+        token = Configuration.get("ONE_PASSWORD_TOKEN")
         client = await Client.authenticate(
             auth=token,
             integration_name="one_password_token",
