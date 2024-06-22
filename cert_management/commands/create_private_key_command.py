@@ -4,7 +4,7 @@ from cert_management.configuration.dir_configuration import DirConfiguration
 from cert_management.contract.store_service_contract import (
     StoreServiceContract,
 )
-from cert_management.openssl_library.cryptograph.PrivateKey import PrivateKey
+from cert_management.openssl_library.cryptography.private_key import PrivateKey
 
 
 class CreatePrivateKey:

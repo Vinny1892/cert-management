@@ -4,7 +4,7 @@ from cert_management.configuration.dir_configuration import DirConfiguration
 from cert_management.contract.store_service_contract import (
     StoreServiceContract,
 )
-from cert_management.openssl_library.cryptograph.CertificateAuthority import (
+from cert_management.openssl_library.cryptography.CertificateAuthority import (
     CertificateAuthority,
 )
 

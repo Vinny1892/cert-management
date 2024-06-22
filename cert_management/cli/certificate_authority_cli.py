@@ -1,4 +1,5 @@
 import asyncio
+import os
 from functools import wraps
 
 from typer import Option, Typer
@@ -22,7 +23,7 @@ async def create(
     path_private_key: str = Option(None, help="Path to the private key file"),
     password_private_key: str = Option(
         None, help="Password for private key", envvar="PASSWORD_PRIVATE_KEY"
-    ),
+    )
 ):
     try:
         options = OptionsCreateCertificateAuthority(
@@ -34,3 +35,4 @@ async def create(
         ).handle()
     except Exception as e:
         print_error(str(e))
+        os.exit(1)
