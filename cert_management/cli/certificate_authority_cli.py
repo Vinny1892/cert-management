@@ -33,6 +33,7 @@ async def create(
         await CreateCertificateAuthorityUseCase(
             store_service=provider, options=options
         ).handle()
+        print("Certificate authority created successfully")
     except Exception as e:
         print_error(str(e))
         sys.exit(1)

@@ -1,7 +1,7 @@
 from unittest.mock import AsyncMock, create_autospec, patch
 
-from cert_management.contract.store_service_contract import (
-    StoreServiceContract,
+from cert_management.contract.store_provider_contract import (
+    StoreProviderContract,
 )
 from cert_management.openssl_library.cryptography.private_key import PrivateKey
 from cert_management.use_case.create_certificate_authority_use_case import (
@@ -12,7 +12,7 @@ from cert_management.use_case.create_certificate_authority_use_case import (
 @patch("cert_management.configuration.dir_configuration.os")
 async def test_create_certificate_authority_with_password_and_create_private_key(mock_os):
     mock_os.makedirs.return_value = None
-    mock_store_service = create_autospec(StoreServiceContract, instance=True)
+    mock_store_service = create_autospec(StoreProviderContract, instance=True)
     mock_store_service.store_many = AsyncMock(return_value=None)
     mock_store_service.store = AsyncMock(return_value=None)
     password_private_key = "t3st3!"
@@ -31,7 +31,7 @@ async def test_create_certificate_authority_with_password_and_load_pk(mock_os,mo
     private_key, _public_key = PrivateKey().create_private_key(passphrase=password_private_key)
     mock_load_pk_private_key.return_value = private_key
     mock_os.makedirs.return_value = None
-    mock_store_service = create_autospec(StoreServiceContract, instance=True)
+    mock_store_service = create_autospec(StoreProviderContract, instance=True)
     mock_store_service.get_item = AsyncMock(return_value=private_key_string)
     mock_store_service.store = AsyncMock(return_value=None)
     options =  OptionsCreateCertificateAuthority(
@@ -50,7 +50,7 @@ async def test_create_certificate_authority_without_password_and_load_pk(mock_os
     private_key, _public_key = PrivateKey().create_private_key(passphrase=password_private_key)
     mock_load_pk_private_key.return_value = private_key
     mock_os.makedirs.return_value = None
-    mock_store_service = create_autospec(StoreServiceContract, instance=True)
+    mock_store_service = create_autospec(StoreProviderContract, instance=True)
     mock_store_service.get_item = AsyncMock(return_value=private_key_string)
     mock_store_service.store = AsyncMock(return_value=None)
     options =  OptionsCreateCertificateAuthority(
