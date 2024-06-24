@@ -1,8 +1,8 @@
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
 from cert_management.configuration.dir_configuration import DirConfiguration
-from cert_management.contract.store_service_contract import (
-    StoreServiceContract,
+from cert_management.contract.store_provider_contract import (
+    StoreProviderContract,
 )
 from cert_management.openssl_library.cryptography.CertificateAuthority import (
     CertificateAuthority,
@@ -10,7 +10,7 @@ from cert_management.openssl_library.cryptography.CertificateAuthority import (
 
 
 class CreateCertificateAuthorityCommand:
-    def __init__(self, store_service: StoreServiceContract, private_key: RSAPrivateKey):
+    def __init__(self, store_service: StoreProviderContract, private_key: RSAPrivateKey):
         DirConfiguration().create_dirs()
         self._dirs = DirConfiguration().get_dir()
         self._private_key = private_key

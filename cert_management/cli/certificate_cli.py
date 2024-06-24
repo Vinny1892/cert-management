@@ -9,9 +9,9 @@ from cert_management.cli.style import print_error
 from cert_management.commands.create_private_key_command import (
     CreatePrivateKey,
 )
-from cert_management.store.one_password_store_service import (
-    OnePasswordStoreService,
-)
+# from cert_management.store_provider.one_password_store_provider import (
+#     OnePasswordStoreService,
+# )
 
 app = Typer()
 
@@ -22,9 +22,10 @@ async def sign_certificate(
     path: str = Argument("", help="Path to the certificate file"),
 ):
     try:
-        one_password = await OnePasswordStoreService.build()
-        await CreatePrivateKey(store_service=one_password, passphrase="").execute(
-            save=True
-        )
+        print("sign certificate")
+        # one_password = await OnePasswordStoreService.build()
+        # await CreatePrivateKey(store_service=one_password, passphrase="").execute(
+        #     save=True
+        # )
     except Exception as exception:
         print_error(exception)

@@ -8,8 +8,8 @@ from cert_management.commands.create_ca_command import (
 from cert_management.commands.create_private_key_command import (
     CreatePrivateKey,
 )
-from cert_management.contract.store_service_contract import (
-    StoreServiceContract,
+from cert_management.contract.store_provider_contract import (
+    StoreProviderContract,
 )
 from cert_management.openssl_library.cryptography.private_key import PrivateKey
 
@@ -20,8 +20,8 @@ class OptionsCreateCertificateAuthority:
     class to register options in which by CreateCertificateAuthorityUseCase
     """
 
-    path_private_key: str | None
-    password_private_key: str | None
+    path_private_key: str = None
+    password_private_key: str = None
 
 
 class CreateCertificateAuthorityUseCase:
@@ -29,12 +29,12 @@ class CreateCertificateAuthorityUseCase:
      Create certificate authority use case, this class is responsible for all flow to create a valid certificate authority
 
     Args:
-       store_service: provider to use for store files generated in this use case
+       store_service: provider to use for store_provider files generated in this use case
        options: options for change default behavior for this use case, list of options
        [ path_private_key, password_private_key ]
 
     Attributes:
-       store: provider to use for store files generated in this use case
+       store: provider to use for store_provider files generated in this use case
        options: options for change default behavior for this use case, list of options
        [ path_private_key, password_private_key ]
 
@@ -42,7 +42,7 @@ class CreateCertificateAuthorityUseCase:
 
     def __init__(
         self,
-        store_service: StoreServiceContract,
+        store_service: StoreProviderContract,
         options: OptionsCreateCertificateAuthority,
     ) -> None:
         self.store = store_service
