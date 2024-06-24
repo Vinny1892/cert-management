@@ -4,7 +4,7 @@
 name = "annotated-types"
 version = "0.7.0"
 description = "Reusable constraint types to use with typing.Annotated"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "annotated_types-0.7.0-py3-none-any.whl", hash = "sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"},
@@ -62,8 +62,6 @@ mypy-extensions = ">=0.4.3"
 packaging = ">=22.0"
 pathspec = ">=0.9.0"
 platformdirs = ">=2"
-tomli = {version = ">=1.1.0", markers = "python_version < \"3.11\""}
-typing-extensions = {version = ">=4.0.1", markers = "python_version < \"3.11\""}
 
 [package.extras]
 colorama = ["colorama (>=0.4.3)"]
@@ -331,9 +329,6 @@ files = [
     {file = "coverage-7.5.3.tar.gz", hash = "sha256:04aefca5190d1dc7a53a4c1a5a7f8568811306d7a8ee231c42fb69215571944f"},
 ]
 
-[package.dependencies]
-tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.11.0a6\" and extra == \"toml\""}
-
 [package.extras]
 toml = ["tomli"]
 
@@ -390,20 +385,6 @@ sdist = ["build"]
 ssh = ["bcrypt (>=3.1.5)"]
 test = ["certifi", "pretend", "pytest (>=6.2.0)", "pytest-benchmark", "pytest-cov", "pytest-xdist"]
 test-randomorder = ["pytest-randomly"]
-
-[[package]]
-name = "exceptiongroup"
-version = "1.2.1"
-description = "Backport of PEP 654 (exception groups)"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "exceptiongroup-1.2.1-py3-none-any.whl", hash = "sha256:5258b9ed329c5bbdd31a309f53cbfb0b155341807f6ff7606a1e801a891b29ad"},
-    {file = "exceptiongroup-1.2.1.tar.gz", hash = "sha256:a4785e48b045528f5bfe627b6ad554ff32def154f42372786903b7abcfe1aa16"},
-]
-
-[package.extras]
-test = ["pytest (>=6)"]
 
 [[package]]
 name = "ghp-import"
@@ -809,7 +790,7 @@ files = [
 name = "onepassword"
 version = "0.1.0b1"
 description = "The 1Password Python SDK offers programmatic read access to your secrets in 1Password in an interface native to Python."
-optional = false
+optional = true
 python-versions = "*"
 files = []
 develop = false
@@ -820,8 +801,8 @@ pydantic = "*"
 [package.source]
 type = "git"
 url = "ssh://git@github.com/1Password/onepassword-sdk-python.git"
-reference = "v0.1.0-beta.9"
-resolved_reference = "5b0adda3d1b5608232a8d640dc01a60dda676350"
+reference = "v0.1.0-beta.11"
+resolved_reference = "cc322c160b865da391b9e87fddeefbb98b20937f"
 
 [[package]]
 name = "packaging"
@@ -929,7 +910,7 @@ files = [
 name = "pydantic"
 version = "2.7.4"
 description = "Data validation using Python type hints"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pydantic-2.7.4-py3-none-any.whl", hash = "sha256:ee8538d41ccb9c0a9ad3e0e5f07bf15ed8015b481ced539a1759d8cc89ae90d0"},
@@ -948,7 +929,7 @@ email = ["email-validator (>=2.0.0)"]
 name = "pydantic-core"
 version = "2.18.4"
 description = "Core functionality for Pydantic validation and serialization"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "pydantic_core-2.18.4-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:f76d0ad001edd426b92233d45c746fd08f467d56100fd8f30e9ace4b005266e4"},
@@ -1080,11 +1061,9 @@ files = [
 
 [package.dependencies]
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
-exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
 iniconfig = "*"
 packaging = "*"
 pluggy = ">=1.5,<2.0"
-tomli = {version = ">=1", markers = "python_version < \"3.11\""}
 
 [package.extras]
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
@@ -1504,7 +1483,10 @@ files = [
 [package.extras]
 watchmedo = ["PyYAML (>=3.10)"]
 
+[extras]
+onepassword = ["onepassword"]
+
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.10"
-content-hash = "d659d365659e8c0c148292502bee8e6b26ef7e71c58501cfe9573d5130f7654b"
+python-versions = "3.12.*"
+content-hash = "d7ee3aa71cdb13ba50d42a4066e499181fb7076a23b196d55ac447d1711ec73f"
