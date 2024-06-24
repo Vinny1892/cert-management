@@ -1,14 +1,14 @@
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
 from cert_management.configuration.dir_configuration import DirConfiguration
-from cert_management.contract.store_service_contract import (
-    StoreServiceContract,
+from cert_management.contract.store_provider_contract import (
+    StoreProviderContract,
 )
-from cert_management.openssl_library.cryptograph.PrivateKey import PrivateKey
+from cert_management.openssl_library.cryptography.private_key import PrivateKey
 
 
 class CreatePrivateKey:
-    def __init__(self, store_service: StoreServiceContract, passphrase=None):
+    def __init__(self, store_service: StoreProviderContract, passphrase=None):
         DirConfiguration().create_dirs()
         self._dirs = DirConfiguration().get_dir()
         self._private_key = None

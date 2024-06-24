@@ -5,9 +5,7 @@ from cert_management.cli.style import print_error
 from cert_management.commands.create_private_key_command import (
     CreatePrivateKey,
 )
-from cert_management.store.one_password_store_service import (
-    OnePasswordStoreService,
-)
+from cert_management.store_provider.provider import choose_provider
 
 app = Typer()
 
@@ -18,8 +16,8 @@ async def create(
     password: str = Argument(None, help="Password for private key"),
 ):
     try:
-        one_password = await OnePasswordStoreService.build()
-        await CreatePrivateKey(store_service=one_password, passphrase=password).execute(
+        provider = choose_provider()
+        await CreatePrivateKey(store_service=provider, passphrase=password).execute(
             save=True
         )
     except Exception as exception:
