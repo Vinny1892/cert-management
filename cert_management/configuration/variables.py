@@ -2,8 +2,13 @@ from decouple import Config, RepositoryEmpty
 
 
 class Configuration:
-
     @classmethod
     def get(cls, var):
         config = Config(RepositoryEmpty())
-        return config(var)
+        try:
+          return config(var)
+        except Exception:
+            return None
+
+
+__all__ = ['Configuration']

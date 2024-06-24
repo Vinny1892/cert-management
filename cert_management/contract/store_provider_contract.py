@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
 
-
-class StoreServiceContract(ABC):
+class StoreProviderContract(ABC):
+    @classmethod
+    @abstractmethod
+    def build(cls):
+        raise Exception("Not implemented method")
 
     @abstractmethod
     def store(self, item, name, config: dict):
